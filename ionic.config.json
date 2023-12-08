@@ -1,0 +1,7 @@
+{
+  "name": "EtiquetaBluetooth",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
