@@ -1,17 +1,50 @@
+
+
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Etiqueta Padrão
     </ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar placeholder="Buscar produto" [(ngModel)]="searchTerm" (ionInput)="filterItens()"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+<ion-content [fullscreen]="true">
+
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card *ngFor="let produto of produtoLista$" >
+    <ion-card-header>
+      <ion-card-title>{{produto.nome | titlecase}}</ion-card-title>
+      <ion-card-title>Validade: 
+        <span *ngIf="produto.dias > 0;else indeterminado">{{produto.dias}} dias</span>
+        <ng-template #indeterminado>Indeterminado</ng-template>
+      </ion-card-title>
+    </ion-card-header> 
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button item-end size="mediun" color="primary" (click)="imprime(produto)">
+            <ion-icon slot="icon-only" name="print-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col class='ion-text-end'>
+          <ion-button item-end size="medium" color="primary" (click)="showEdit(produto)">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button id="delete-item" (click)="showDelete(produto)" item-end size="medium" color="danger">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+
+
+  </ion-card>
 </ion-content>
